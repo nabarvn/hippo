@@ -10,11 +10,11 @@ import { PRODUCT_CATEGORIES } from "@/config";
 type Category = (typeof PRODUCT_CATEGORIES)[number];
 
 interface NavItemProps {
-  category: Category;
-  handleOpen: () => void;
-  close: () => void;
   isOpen: boolean;
+  close: () => void;
+  category: Category;
   isAnyOpen: boolean;
+  handleOpen: () => void;
 }
 
 const NavItem = ({
