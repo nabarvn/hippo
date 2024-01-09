@@ -1,7 +1,11 @@
 import Link from "next/link";
-import { Icons, MaxWidthWrapper, NavItems } from "@/components";
+import { buttonVariants } from "@/components/ui/Button";
+import { Cart, Icons, MaxWidthWrapper, NavItems } from "@/components";
 
 const Navbar = async () => {
+  // mocked value
+  const user = null;
+
   return (
     <div className='bg-white sticky z-50 top-0 inset-x-0 h-16'>
       <header className='relative bg-white'>
@@ -20,7 +24,54 @@ const Navbar = async () => {
                 <NavItems />
               </div>
 
-              {/* TODO: display navigations */}
+              <div className='flex items-center ml-auto'>
+                <div className='hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6'>
+                  {user ? null : (
+                    <Link
+                      href='/sign-in'
+                      className={buttonVariants({
+                        variant: "ghost",
+                      })}
+                    >
+                      Sign in
+                    </Link>
+                  )}
+
+                  {user ? null : (
+                    <span aria-hidden='true' className='h-6 w-px bg-gray-200' />
+                  )}
+
+                  {user ? (
+                    <>{/* TODO: display profile menu */}</>
+                  ) : (
+                    <Link
+                      href='/sign-up'
+                      className={buttonVariants({
+                        variant: "ghost",
+                      })}
+                    >
+                      Create account
+                    </Link>
+                  )}
+
+                  {user ? (
+                    <span aria-hidden='true' className='h-6 w-px bg-gray-200' />
+                  ) : null}
+
+                  {user ? null : (
+                    <div className='flex lg:ml-6'>
+                      <span
+                        aria-hidden='true'
+                        className='h-6 w-px bg-gray-200'
+                      />
+                    </div>
+                  )}
+
+                  <div className='flow-root ml-4 lg:ml-6'>
+                    <Cart />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </MaxWidthWrapper>
