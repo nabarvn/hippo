@@ -1,7 +1,8 @@
 import "./globals.css";
+import { Navbar } from "@/components";
+import { Toaster } from "@/components/ui";
 import { Inter } from "next/font/google";
 import { cn, constructMetadata } from "@/lib/utils";
-import { Navbar } from "@/components";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,8 @@ export default function RootLayout({
           <Navbar />
           <div className='flex-grow flex-1'>{children}</div>
         </main>
+
+        <Toaster />
       </body>
     </html>
   );
