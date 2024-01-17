@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { trpc } from "@/trpc/client";
 import { Icons } from "@/components";
 import { Input } from "@/components/ui";
 import { ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, buttonVariants } from "@/components/ui/Button";
 
@@ -23,7 +25,12 @@ import {
   FormMessage,
 } from "@/components/ui/Form";
 
+import { toast } from "sonner";
+import { ZodError } from "zod";
+
 const SignUpPage = () => {
+  const router = useRouter();
+
   const form = useForm<TCredentialsValidator>({
     resolver: zodResolver(CredentialsValidator),
     defaultValues: {
@@ -32,8 +39,30 @@ const SignUpPage = () => {
     },
   });
 
+  const { mutate: registerUser, isLoading } =
+    trpc.auth.createPayloadUser.useMutation({
+      onError: (err) => {
+        if (err.data?.code === "CONFLICT") {
+          toast.error("This email is already in use. Sign in instead?");
+          return;
+        }
+
+        if (err instanceof ZodError) {
+          toast.error(err.issues[0].message);
+          return;
+        }
+
+        toast.error("Something went wrong. Please try again.");
+      },
+
+      onSuccess: ({ sentToEmail }) => {
+        toast.success(`Verification email sent to ${sentToEmail}.`);
+        router.push("/verify-email?to=" + sentToEmail);
+      },
+    });
+
   const onSubmit = ({ email, password }: TCredentialsValidator) => {
-    // TODO: send data to the server
+    registerUser({ email, password });
   };
 
   return (
@@ -105,7 +134,7 @@ const SignUpPage = () => {
                 )}
               />
 
-              <Button>Sign up</Button>
+              <Button disabled={isLoading}>Sign up</Button>
             </form>
           </Form>
         </div>
