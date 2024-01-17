@@ -1,5 +1,5 @@
 import express from "express";
-import { appRouter } from "@/trpc";
+import { appRouter } from "./trpc";
 import { getPayloadClient } from "./payload-client";
 import { nextApp, nextHandler } from "./next-utils";
 import * as trpcExpress from "@trpc/server/adapters/express";
