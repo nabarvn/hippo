@@ -41,6 +41,11 @@ const SignUpPage = () => {
 
   const { mutate: registerUser, isLoading } =
     trpc.auth.createPayloadUser.useMutation({
+      onSuccess: ({ sentToEmail }) => {
+        toast.success(`Verification email sent to ${sentToEmail}.`);
+        router.push("/verify-email?to=" + sentToEmail);
+      },
+
       onError: (err) => {
         if (err.data?.code === "CONFLICT") {
           toast.error("This email is already in use. Sign in instead?");
@@ -53,11 +58,6 @@ const SignUpPage = () => {
         }
 
         toast.error("Something went wrong. Please try again.");
-      },
-
-      onSuccess: ({ sentToEmail }) => {
-        toast.success(`Verification email sent to ${sentToEmail}.`);
-        router.push("/verify-email?to=" + sentToEmail);
       },
     });
 
