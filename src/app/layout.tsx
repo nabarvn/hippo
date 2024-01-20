@@ -25,7 +25,7 @@ export default function RootLayout({
           </Providers>
         </main>
 
-        <Toaster />
+        <Toaster position='top-center' richColors />
       </body>
     </html>
   );
