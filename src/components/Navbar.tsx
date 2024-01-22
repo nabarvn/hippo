@@ -1,10 +1,19 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { getServerSideUser } from "@/lib/payload";
 import { buttonVariants } from "@/components/ui/Button";
-import { Cart, Icons, MaxWidthWrapper, NavItems } from "@/components";
+
+import {
+  Cart,
+  Icons,
+  MaxWidthWrapper,
+  NavItems,
+  AccountMenu,
+} from "@/components";
 
 const Navbar = async () => {
-  // mocked value
-  const user = null;
+  const nextCookies = cookies();
+  const { user } = await getServerSideUser(nextCookies);
 
   return (
     <div className='bg-white sticky z-50 top-0 inset-x-0 h-16'>
@@ -42,7 +51,7 @@ const Navbar = async () => {
                   )}
 
                   {user ? (
-                    <>{/* TODO: display profile menu */}</>
+                    <AccountMenu user={user} />
                   ) : (
                     <Link
                       href='/sign-up'
