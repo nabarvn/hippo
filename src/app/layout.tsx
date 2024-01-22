@@ -1,4 +1,5 @@
 import "./globals.css";
+import { cookies } from "next/headers";
 import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui";
 import { Navbar, Providers } from "@/components";
@@ -13,6 +14,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const nextCookies = cookies();
+
   return (
     <html lang='en' className='h-full'>
       <body
@@ -20,7 +23,7 @@ export default function RootLayout({
       >
         <main className='relative flex flex-col min-h-screen'>
           <Providers>
-            <Navbar />
+            <Navbar nextCookies={nextCookies} />
             <div className='flex-grow flex-1'>{children}</div>
           </Providers>
         </main>
