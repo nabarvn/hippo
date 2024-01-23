@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { getServerSideUser } from "@/lib/payload";
 import { buttonVariants } from "@/components/ui/Button";
 
@@ -11,8 +10,13 @@ import {
   AccountMenu,
 } from "@/components";
 
-const Navbar = async () => {
-  const nextCookies = cookies();
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+
+const Navbar = async ({
+  nextCookies,
+}: {
+  nextCookies: ReadonlyRequestCookies;
+}) => {
   const { user } = await getServerSideUser(nextCookies);
 
   return (
