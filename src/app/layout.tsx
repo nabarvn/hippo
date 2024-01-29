@@ -1,8 +1,9 @@
 import "./globals.css";
 import { cookies } from "next/headers";
 import { Inter } from "next/font/google";
+import { Providers } from "@/components";
 import { Toaster } from "@/components/ui";
-import { Navbar, Providers } from "@/components";
+import { Navbar } from "@/components/navigation";
 import { cn, constructMetadata } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
