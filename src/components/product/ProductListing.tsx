@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Product } from "@/payload-types";
+import { ImageSlider } from "@/components";
 import { useEffect, useState } from "react";
 import { cn, formatPrice } from "@/lib/utils";
 import { PRODUCT_CATEGORIES } from "@/config";
@@ -32,7 +33,7 @@ const ProductListing = ({ index, product }: ProductListingProps) => {
 
   const validUrls = product.images
     .map(({ image }) => (typeof image === "string" ? image : image.url))
-    .filter(Boolean) as string[];
+    .filter(Boolean) as string[]; // we use `filter(Boolean)` to remove null or undefined values
 
   if (isVisible && product) {
     return (
@@ -43,7 +44,7 @@ const ProductListing = ({ index, product }: ProductListingProps) => {
         })}
       >
         <div className='flex flex-col w-full'>
-          {/* TODO: carousel goes here */}
+          <ImageSlider urls={validUrls} />
 
           <h3 className='font-medium text-sm text-gray-700 mt-4'>
             {product.name}
