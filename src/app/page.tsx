@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MaxWidthWrapper } from "@/components";
+import { ProductReel } from "@/components/product";
 import { Button, buttonVariants } from "@/components/ui/Button";
 import { ArrowDownToLine, CheckCircle, Leaf } from "lucide-react";
 
@@ -48,7 +49,11 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* TODO: `ProductReel` goes here */}
+        <ProductReel
+          title='Brand new'
+          href='/products?sort=recent'
+          query={{ sort: "desc", limit: 4 }}
+        />
       </MaxWidthWrapper>
 
       <section className='border-t border-gray-200 bg-gray-50'>
