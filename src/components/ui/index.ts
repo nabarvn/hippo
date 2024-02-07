@@ -5,3 +5,4 @@ export { Input } from "./Input";
 export { Label } from "./Label";
 export { Toaster } from "./Sonner";
 export { Skeleton } from "./Skeleton";
+export { ScrollArea } from "./ScrollArea";
